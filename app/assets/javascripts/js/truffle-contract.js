@@ -421,6 +421,11 @@ var contract = (function(module) {
       val.then = function(fn) {
         return self.detectNetwork().then(function() {
           // We don't have a network config for the one we found
+          //var key = Object.keys(self._json.networks)[0];
+          //var network = self._json.networks[key];
+          //delete self._json.networks[key];
+          //self._json.networks[self.network_id] = network;
+          debugger;
           if (self._json.networks[self.network_id] == null) {
             throw new Error(self.contract_name + " has not been deployed to detected network (network/artifact mismatch)");
           }
