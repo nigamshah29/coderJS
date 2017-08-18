@@ -5,7 +5,7 @@ class PaymentsController < ApplicationController
 
   def request_payment
   	binding.pry
-  	ipc_file = Rails.root.join("app", "smart_contract", "coderMVP2.sol").to_s
+  	ipc_file = Rails.root.join("app", "smart_contract", "Coder.sol").to_s
   	contract = Ethereum::IpcClient.new(ipc_file, false)
   	# @contract = Ethereum::Contract.create(file: Rails.root.join("app", "smart_contract", "contracts", "coderMVP2.sol").to_s)
   	binding.pry

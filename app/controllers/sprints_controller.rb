@@ -25,3 +25,4 @@ class SprintsController < ApplicationController
   def destroy
   end
 end
+

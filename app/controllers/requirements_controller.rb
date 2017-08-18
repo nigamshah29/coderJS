@@ -8,8 +8,10 @@ class RequirementsController < ApplicationController
   end
 
   def sprint_requirements
-  	@sprint = Sprint.find(params[:s_id])
-  	@requirements = Requirement.where(sprint_id: params[:s_id])
+    @sprint = Sprint.find(params[:s_id])
+    @requirements = Requirement.where(sprint_id: params[:s_id])
+    gon.sprint = @sprint
+    gon.requirements = @requirements
     if @sprint.project.project_type == "Accelerate"
       @project_rate = 75
     elsif @sprint.project.project_type == "Startup"

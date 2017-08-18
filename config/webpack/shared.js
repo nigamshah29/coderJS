@@ -33,6 +33,7 @@ module.exports = {
 
   module: {
     rules: sync(join(loadersDir, '*.js')).map(loader => require(loader))
+
   },
 
   plugins: [
