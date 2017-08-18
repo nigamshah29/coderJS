@@ -21,8 +21,10 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <!--<%= include_gon %>-->
-    <script src='http://127.0.0.1:8080/bundle.js'></script>
+    <!--WE LOAD THAT APP FILE HERE-->
+    <%= javascript_include_tag 'js/web3.min.js' %>
+    <%= javascript_include_tag 'js/truffle-contract.js' %>
+    <%= javascript_include_tag 'js/App.js' %>
   </head>
 
   <body>

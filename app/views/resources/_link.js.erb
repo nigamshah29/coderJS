@@ -1,0 +1,11 @@
+$(document).ready(() => {
+	const requirements = <%=raw @requirements.to_json %>;
+	const pr = <%= @project_rate %>;
+
+	requirements.map(r => {
+		$(`#start_requirement_${r.id}`).click((event) => {
+			event.preventDefault();
+			console.log(r.id, r.expected_time * pr);
+		});
+	});
+});
