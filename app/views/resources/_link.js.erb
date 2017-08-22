@@ -6,6 +6,9 @@ $(document).ready(() => {
 		$(`#start_requirement_${r.id}`).click((event) => {
 			event.preventDefault();
 			console.log(r.id, r.expected_time * pr);
+			const reqId = r.id;
+			const payment_amount = r.expected_time * pr
+			window.App.handleStartRequirement(reqId, payment_amount);
 		});
 	});
 });

@@ -27,55 +27,71 @@ App = {
 
 	      // Set the provider for our contract.
 	      App.contracts.Coder.setProvider(App.web3Provider);
-	      // Use our contract to retieve and mark the adopted pets.
-	      return App.markAdopted();
-	    });
-  	},
 
-  	handleAdopt: function() {
-    event.preventDefault();
+        // get accounts from TestRPC
+        web3.eth.getAccounts(function(error, accounts){
+          if (error) {
+            console.log(error);
+          }
 
-    var petId = parseInt($(event.target).data('id'));
+	      // Use our contract to retrieve and mark the started requirements.
+	         return App.handleStartRequirement();
+  	      });
+  	    })
+      },
 
-    var adoptionInstance;
+  	handleStartRequirement: function(reqId, payment_amount) {
+      debugger;
+      // var reqId = parseInt($(event.target).data('id'));
 
-    web3.eth.getAccounts(function(error, accounts){
-      if (error) {
-        console.log(error);
-      }
+      var coderInstance;
 
-      var account = accounts[0];
+      web3.eth.getAccounts(function(error, accounts){
+        if (error) {
+          console.log(error);
+        }
 
-      App.contracts.Adoption.deployed().then(function(instance) {
+        // Set client equal to Testrpc account 0
+        let client = accounts[0];
+
+        App.contracts.Coder.deployed().then(function(instance) {
+          coderInstance = instance;
+        debugger;
+          return coderInstance.startRequirement(client, payment_amount);
+        }).then(function(result) {
+          return App.startRequirement();
+        }).catch(function(err) {
+          console.log(err.message);
+        });
+      });
+    },
+
+    markAdopted: function(adopters, account) {
+
+      let coderAdmin = accounts[1];
+
+      var adoptionInstance;
+      debugger;
+      console.log(App.web3Provider);
+
+      App.contracts.Coder.deployed().then(function(instance) {
         adoptionInstance = instance;
 
-        return adoptionInstance.adopt(petId, {from: account});
-      }).then(function(result) {
-        return App.markAdopted();
+        return adoptionInstance.getAdopters.call();
+      }).then(function(adopters) {
+        for (i = 0; i < adopters.length; i++) {
+          if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
+            $('.panel-pet').eq(i).find('button').text('Pending...').attr('disabled', true);
+          }
+        }
       }).catch(function(err) {
         console.log(err.message);
-      });
-    });
-  },
-
-  markAdopted: function(adopters, account) {
-    var adoptionInstance;
-    debugger;
-    console.log(App.web3Provider);
-    App.contracts.Coder.deployed().then(function(instance) {
-      adoptionInstance = instance;
-
-      return adoptionInstance.getAdopters.call();
-    }).then(function(adopters) {
-      for (i = 0; i < adopters.length; i++) {
-        if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
-          $('.panel-pet').eq(i).find('button').text('Pending...').attr('disabled', true);
-        }
-      }
-    }).catch(function(err) {
-      console.log(err.message);
-    });  
+      });  
+    }
   }
-}
 
-$(document).ready(() => App.initWeb3());
+
+$(document).ready(() => {
+  window.App = App; 
+  App.initWeb3()
+});
