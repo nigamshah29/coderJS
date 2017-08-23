@@ -2,32 +2,34 @@ pragma solidity ^0.4.4;
 
 contract Coder {
 
-  // enum GameState {notStarted, inProgress, pendingApproval, requirementApproved}  //4 states that a "Requirement" object will go through
-  // GameState public currentState;  //currentState variable that is set to the state the Requirement is in
-  address public client;  //ETH wallet address for the client
+  enum GameState {notStarted, inProgress, pendingApproval, requirementApproved}  //4 states that a "Requirement" object will go through
+  GameState public currentState;  //currentState variable that is set to the state the Requirement is in
   address public coderAdmin;  //ETH wallet address for the Coder project admin or PM
+  address public client;  //ETH wallet address for the client
   // address public coderUser;  //ETH wallet address for the developer or worker executing on Requirement
-  uint256 contract_amount; //expected_hours * project_bill_rate
+  uint contract_amount; //expected_hours * project_bill_rate
+
 
   modifier onlyState(GameState expectedState) { if(expectedState == currentState) { _; } else { revert(); } }
 
   //Constructor function to initialize smart contract
   function Coder() {
-    // coderUser = _coderUser;
     currentState = GameState.notStarted;
   }
 
-  function startRequirement(address _client, uint256 _contract_amount) onlyState(GameState.notStarted) payable returns (bool) {
-      client = _client;
-      // client = msg.sender;
-      contract_amount = _contract_amount;
+  function startRequirement(int _contract_amount) onlyState(GameState.notStarted) payable public returns (bool) {
+      // client = _client;4
+      client = msg.sender;2
+      contract_amount = uint(_contract_amount);
       if (msg.value == contract_amount) {
         currentState = GameState.inProgress;
         return true;
       }
       else {
         revert();
+        return false;
       }
+      return true;
   }
 
   function approvalRequest(address _coderAdmin) onlyState(GameState.inProgress) returns (bool) {
@@ -54,3 +56,4 @@ contract Coder {
 
 
 }
+
