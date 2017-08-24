@@ -43,23 +43,21 @@ App = {
 
 
 	handleStartRequirement: function(reqId, payment_amount) {
-    // var payment = String(payment_amount);
     var coderInstance;
     App.web3.eth.getAccounts(function(error, accounts){
       if (error) {
         console.log(error);
       } 
       // Set client equal to a testrpc account
-      let client = accounts[0];
+      let client = accounts[1];
       App.contracts.Coder.deployed().then(function(instance) {
         coderInstance = instance;
           return coderInstance.startRequirement({
             contract_amount: payment_amount,
             from: client.toString(), 
-            value: web3.toWei(1, "ether")
+            value: web3.toWei(payment_amount/100, "ether")
           });
       }).then(function(success) {
-        debugger;
         App.markReadytoStart(reqId);
       }).catch(function(err) {
         console.error(err.message);
@@ -67,8 +65,8 @@ App = {
     })
   },
 
-
-  markReadytoStart: function(reqId) {      
+  markReadytoStart: function(reqId) { 
+  debugger;     
     $('#start_requirement_reqId').find('button').text('Requirement Started').attr('disabled', true);
   }
 

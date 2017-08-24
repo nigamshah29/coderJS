@@ -1,0 +1,135 @@
+{
+  "contract_name": "Coder",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "currentState",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_contract_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "startRequirement",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": true,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "client",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getBalance",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "closeRequirement",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_coderAdmin",
+          "type": "address"
+        }
+      ],
+      "name": "approvalRequest",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "coderAdmin",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "payCoder",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": true,
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "type": "constructor"
+    }
+  ],
+  "unlinked_binary": "0x6060604052341561000f57600080fd5b5b60008054819060ff19166001825b02179055505b5b610434806100346000396000f3006060604052361561008b5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630c3f6acf81146100905780630d6a6a6d146100c7578063109e94cf146100e657806312065fe0146101155780632310ef4d1461013a57806330d6f63e1461016157806360a66a0214610194578063e42e1d7b146101c3575b600080fd5b341561009b57600080fd5b6100a36101df565b604051808260038111156100b357fe5b60ff16815260200191505060405180910390f35b6100d26004356101e8565b604051901515815260200160405180910390f35b34156100f157600080fd5b6100f961027b565b604051600160a060020a03909116815260200160405180910390f35b341561012057600080fd5b61012861028a565b60405190815260200160405180910390f35b341561014557600080fd5b6100d2610299565b604051901515815260200160405180910390f35b341561016c57600080fd5b6100d2600160a060020a03600435166102e9565b604051901515815260200160405180910390f35b341561019f57600080fd5b6100f9610365565b604051600160a060020a03909116815260200160405180910390f35b6100d2610379565b604051901515815260200160405180910390f35b60005460ff1681565b60008054819060ff1660038111156101fc57fe5b81600381111561020857fe5b141561008b576001805473ffffffffffffffffffffffffffffffffffffffff191633600160a060020a031617905560028390553483141561008b57600080546001919060ff191682805b02179055506001915061026a565b600080fd5b600191505b610274565b600080fd5b5b50919050565b600154600160a060020a031681565b600160a060020a033016315b90565b6000805460029060ff1660038111156102ae57fe5b8160038111156102ba57fe5b141561008b57600080546003919060ff19166001835b0217905550600191505b6102e4565b600080fd5b5b5090565b6000805460019060ff1660038111156102fe57fe5b81600381111561030a57fe5b141561008b576000805474ffffffffffffffffffffffffffffffffffffffff001916610100600160a060020a03861602178082556002919060ff19166001835b0217905550600191505b610274565b600080fd5b5b50919050565b6000546101009004600160a060020a031681565b6000805460039060ff168181111561038d57fe5b81600381111561039957fe5b141561008b57600054600160a060020a0361010090910481169030163180156108fc0290604051600060405180830381858888f1935050505015156103dd57600080fd5b60008054819060ff19166001826102d0565b0217905550600191505b6102e4565b600080fd5b5b50905600a165627a7a7230582070afe5eefb96db93eadba96c3719ffe96f72ab7c63d7b5ff4416a169c2748d060029",
+  "networks": {
+    "1502810624790": {
+      "events": {},
+      "links": {},
+      "address": "0x4288167f71afdddfebbef551e25197f49b01334c",
+      "updated_at": 1503538834138
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1503538834138
+}
