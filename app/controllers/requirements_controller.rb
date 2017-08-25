@@ -23,7 +23,13 @@ class RequirementsController < ApplicationController
     end
   end
 
+  def update
+    requirement = Requirement.find(params[:r_id])
+    requirement.update(status: params[:status])
+  end
+
   def destroy
   end
+
 
 end

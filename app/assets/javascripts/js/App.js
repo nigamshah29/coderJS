@@ -34,11 +34,8 @@ App = {
         if (error) {
           console.log(error);
         }
-         // Use our contract to retrieve and mark the started requirements.
-         return App.handleStartRequirement();
-         // return App.startRequirement();
-	      });
-	    })
+	     });
+	   })
     },
 
 
@@ -48,27 +45,54 @@ App = {
       if (error) {
         console.log(error);
       } 
-      // Set client equal to a testrpc account
-      let client = accounts[1];
+      // Set client equal to a testrpc account, change to MetaMask address
+      let client = accounts[2];
+
       App.contracts.Coder.deployed().then(function(instance) {
         coderInstance = instance;
           return coderInstance.startRequirement({
             contract_amount: payment_amount,
-            from: client.toString(), 
+            from: client, 
             value: web3.toWei(payment_amount/100, "ether")
           });
       }).then(function(success) {
-        App.markReadytoStart(reqId);
+        alert("Payment Received");
       }).catch(function(err) {
         console.error(err.message);
       });
     })
   },
 
-  markReadytoStart: function(reqId) { 
-  debugger;     
-    $('#start_requirement_reqId').find('button').text('Requirement Started').attr('disabled', true);
-  }
+
+  // markInProgress: function(reqId) { 
+  //   $(`#start_requirement_${reqId}`).text('In Progress...').attr('disabled', true);
+  // }
+
+
+  approveRequirement: function(reqId, payment_amount) {
+    var coderInstance;
+    App.web3.eth.getAccounts(function(error, accounts){
+      if (error) {
+        console.log(error);
+      } 
+      // Set client equal to a testrpc account, change to MetaMask address
+      let client = accounts[2];
+
+      App.contracts.Coder.deployed().then(function(instance) {
+        coderInstance = instance;
+          return coderInstance.closeRequirement({
+            contract_amount: payment_amount,
+            from: client, 
+            value: web3.toWei(payment_amount/100, "ether")
+          });
+      }).then(function(success) {
+        return App.markInProgress(reqId);
+      }).catch(function(err) {
+        console.error(err.message);
+      });
+    })
+  },
+
 
 };
 

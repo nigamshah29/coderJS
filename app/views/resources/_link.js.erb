@@ -1,17 +1,64 @@
 <script>
 	$(document).ready(() => {
 		const requirements = <%=raw @requirements.to_json %>;
-		const pr = <%= @project_rate %>;
+		const project_rate = <%= @project_rate %>;
+
+		requirements.map(r => {
+			$(`#mark_ready_${r.id}`).click((event) => {
+				event.preventDefault();
+				console.log("Mark Requirement " + r.id + " ready for $", r.expected_time * project_rate);
+				$.ajax({
+					type: 'PUT',
+					url: '/requirements/'+$(`#r.id`),
+					data: {
+						r_id: r.id,
+						status: "Pending Client Payment"
+					},
+					success: function(data){
+						console.log(data);
+					}
+				});
+			});
+		});
 
 		requirements.map(r => {
 			$(`#start_requirement_${r.id}`).click((event) => {
 				event.preventDefault();
-				console.log(r.id, r.expected_time * pr);
+				console.log("Start Requirement",r.id, r.expected_time * project_rate);
 				const reqId = r.id;
-				const payment_amount = r.expected_time * pr;
-				window.App.handleStartRequirement(reqId, payment_amount);
-				// window.App.startRequirement(payment_amount);
+				const payment_amount = r.expected_time * project_rate;
+				window.App.handleStartRequirement(reqId, payment_amount).then(function(success){
+						r.status = "In Progress";
+				});
 			});
 		});
+		
+
+		requirements.map(r => {
+			$(`#requirement_complete_${r.id}`).click((event) => {
+				event.preventDefault();
+				console.log("Requirement " + r.id + " Complete");
+				function markRequirementAsComplete(){
+					r.status = "Complete";
+				};
+			});
+		});
+		
+
+		requirements.map(r => {
+			$(`#approve_requirement_${r.id}`).click((event) => {
+				event.preventDefault();
+				console.log("Approve Requirement " + r.id + "Pay Out: $", r.expected_time * project_rate);
+				const reqId = r.id;
+				const payment_amount = r.expected_time * project_rate;
+				window.App.approveRequirement(reqId, payment_amount).then(function(success){
+						r.status = "Approved";			
+				});
+			});
+		});
+
+
+
 	});
+
 </script>

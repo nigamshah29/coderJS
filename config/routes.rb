@@ -49,6 +49,8 @@ Rails.application.routes.draw do
 
   get '/projects/dashboard' => 'projects#dashboard'
 
+  resources :requirements
+
   # Payment Routes
 
   get '/payments/:reqID/request_payment/:payment_amount' => 'payments#request_payment'
