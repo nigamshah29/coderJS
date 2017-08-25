@@ -28,7 +28,6 @@
       <th>Expected Time</th>
       <th>Actual Time</th>
       <th>Contract Amount</th>
-      <th>Status</th>
       <th>Coder Action</th>
       <th>Client Action</th>
   </tr>
@@ -38,20 +37,13 @@
 	      <td><%=r.expected_time%></td>
         <td><%=r.actual_time%></td>
         <td><%= number_to_currency(@project_rate * r.expected_time) %></td>
-        <td><%=r.status%></td>
 	      <td>
-          <% if r.status == "Not Started" %>
             <a class="btn btn-default btn-ready" id="mark_ready_<%=r.id%>">Mark Ready to Start</a>
-          <% else r.status == "In Progress" %>
             <a class="btn btn-default btn-complete" id="requirement_complete_<%=r.id%>"> Mark as Complete</a>
-          <% end %>
         </td>
         <td>
-          <% if r.status == "Pending Client Payment" %>
             <a class="btn btn-success btn-start" id="start_requirement_<%=r.id%>">Start Requirement</a>
-          <% else r.status == "Requirement Complete" %>
             <a class="btn btn-success btn-approve" id="approve_requirement_<%=r.id%>">Approve Requirement</a>
-          <% end %>
         </td>
 	  </tr>
   <% end %>

@@ -64,9 +64,9 @@ App = {
   },
 
 
-  // markInProgress: function(reqId) { 
-  //   $(`#start_requirement_${reqId}`).text('In Progress...').attr('disabled', true);
-  // }
+  markInProgress: function(reqId) { 
+    $(`#start_requirement_${reqId}`).text('In Progress...').attr('disabled', true);
+  }
 
 
   approveRequirement: function(reqId, payment_amount) {
