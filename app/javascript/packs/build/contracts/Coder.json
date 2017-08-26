@@ -1,0 +1,127 @@
+{
+  "contract_name": "Coder",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "currentState",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_contract_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "startRequirement",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": true,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "client",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getBalance",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_coderAdmin",
+          "type": "address"
+        }
+      ],
+      "name": "approvalRequest",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "coderAdmin",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_coderAdmin",
+          "type": "address"
+        }
+      ],
+      "name": "closeRequirement",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": true,
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "type": "constructor"
+    }
+  ],
+  "unlinked_binary": "0x6060604052341561000f57600080fd5b5b60008054819060ff19166001825b02179055505b5b6103e9806100346000396000f300606060405236156100805763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630c3f6acf81146100855780630d6a6a6d146100bc578063109e94cf146100db57806312065fe01461010a57806330d6f63e1461012f57806360a66a02146101625780638651ed2b14610191575b600080fd5b341561009057600080fd5b6100986101b9565b604051808260038111156100a857fe5b60ff16815260200191505060405180910390f35b6100c76004356101c2565b604051901515815260200160405180910390f35b34156100e657600080fd5b6100ee610255565b604051600160a060020a03909116815260200160405180910390f35b341561011557600080fd5b61011d610264565b60405190815260200160405180910390f35b341561013a57600080fd5b6100c7600160a060020a0360043516610273565b604051901515815260200160405180910390f35b341561016d57600080fd5b6100ee6102ef565b604051600160a060020a03909116815260200160405180910390f35b6100c7600160a060020a0360043516610303565b604051901515815260200160405180910390f35b60005460ff1681565b60008054819060ff1660038111156101d657fe5b8160038111156101e257fe5b1415610080576001805473ffffffffffffffffffffffffffffffffffffffff191633600160a060020a031617905560028390553483141561008057600080546001919060ff191682805b021790555060019150610244565b600080fd5b600191505b61024e565b600080fd5b5b50919050565b600154600160a060020a031681565b600160a060020a033016315b90565b6000805460019060ff16600381111561028857fe5b81600381111561029457fe5b1415610080576000805474ffffffffffffffffffffffffffffffffffffffff001916610100600160a060020a03861602178082556002919060ff19166001835b0217905550600191505b61024e565b600080fd5b5b50919050565b6000546101009004600160a060020a031681565b6000805460029060ff16600381111561031857fe5b81600381111561032457fe5b14156100805760008054600160a060020a0380861661010090810274ffffffffffffffffffffffffffffffffffffffff00199093169290921792839055910481169030163180156108fc0290604051600060405180830381858888f19350505050151561039057600080fd5b60008054819060ff19166001826102d4565b0217905550600191505b61024e565b600080fd5b5b509190505600a165627a7a72305820f7824b31ca460ad621e85936f2cdaa9403ce5c9f6b794df50a4782e856996c5c0029",
+  "networks": {
+    "1502810624790": {
+      "events": {},
+      "links": {},
+      "address": "0xbd1ccd422ab17471e8423e2f9259e109de9987f7",
+      "updated_at": 1503714159718
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1503714159718
+}
