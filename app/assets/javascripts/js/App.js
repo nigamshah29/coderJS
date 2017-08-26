@@ -1,11 +1,11 @@
 console.log('HI');
 
 App = {
-	web3Provider: null,
-	contracts: {},
+  web3Provider: null,
+  contracts: {},
 
-	initWeb3: function() {
-	    // Initialize web3 and set the provider to the testRPC.
+  initWeb3: function() {
+      // Initialize web3 and set the provider to the testRPC.
     App.web3Provider = new web3.providers.HttpProvider('http://localhost:8545');
     App.web3 = new Web3(App.web3Provider);
      //  if (typeof web3 !== 'undefined') {
@@ -13,14 +13,14 @@ App = {
      //    App.web3 = new Web3(App.web3.currentProvider);
      //  } else {
      //    // set the provider you want from Web3.providers
-	    //   console.log(web3);
-	    // }
+      //   console.log(web3);
+      // }
 
-	    App.initContract();
-  	},
+      App.initContract();
+    },
 
 
-	initContract: function() {
+  initContract: function() {
     $.getJSON('/Coder.json', function(data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract.
       var CoderArtifact = data;
@@ -34,40 +34,66 @@ App = {
         if (error) {
           console.log(error);
         }
-         // Use our contract to retrieve and mark the started requirements.
-         return App.handleStartRequirement();
-         // return App.startRequirement();
-	      });
-	    })
+       });
+     })
     },
 
 
-	handleStartRequirement: function(reqId, payment_amount) {
+  handleStartRequirement: function(reqId, payment_amount) {
     var coderInstance;
     App.web3.eth.getAccounts(function(error, accounts){
       if (error) {
         console.log(error);
       } 
-      // Set client equal to a testrpc account
-      let client = accounts[1];
+      // Set client equal to a testrpc account, change to MetaMask address
+      let client = accounts[2];
+
       App.contracts.Coder.deployed().then(function(instance) {
         coderInstance = instance;
           return coderInstance.startRequirement({
             contract_amount: payment_amount,
-            from: client.toString(), 
+            from: client, 
             value: web3.toWei(payment_amount/100, "ether")
           });
       }).then(function(success) {
-        App.markReadytoStart(reqId);
+        alert("Payment Received");
+        App.markInProgress(reqId);
       }).catch(function(err) {
         console.error(err.message);
       });
     })
   },
 
-  markReadytoStart: function(reqId) { 
-    $('#start_requirement_reqId').find('button').text('Requirement Started').attr('disabled', true);
+
+  markInProgress: function(reqId) { 
+    $(`#start_requirement_${reqId}`).text('In Progress...').attr('disabled', true);
   }
+
+
+  approveRequirement: function(reqId, payment_amount) {
+    var coderInstance;
+    App.web3.eth.getAccounts(function(error, accounts){
+      if (error) {
+        console.log(error);
+      } 
+      // Set coderAdmin equal to a testrpc account, change to MetaMask address
+      let coderAdmin = accounts[4];
+
+      App.contracts.Coder.deployed().then(function(instance) {
+        coderInstance = instance;
+          return coderInstance.closeRequirement({
+            contract_amount: payment_amount,
+            from: client, 
+            value: web3.toWei(payment_amount/100, "ether")
+          });
+      }).then(function(success) {
+        return App.markInProgress(reqId);
+      }).catch(function(err) {
+        console.error(err.message);
+      });
+    })
+  },
+
 
 };
 

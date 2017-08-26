@@ -1,10 +1,10 @@
 class RequirementsController < ApplicationController
 
   def create
-  	sprint_id = params[:s_id]
-  	project_id = params[:p_id]
-  	@r = Requirement.create(sprint_id:sprint_id, expected_time:params[:expected_time], statement:params[:statement])
-  	redirect_to "/projects/#{project_id}/sprints/#{sprint_id}"
+    sprint_id = params[:s_id]
+    project_id = params[:p_id]
+    @r = Requirement.create(sprint_id:sprint_id, expected_time:params[:expected_time], statement:params[:statement])
+    redirect_to "/projects/#{project_id}/sprints/#{sprint_id}"
   end
 
   def sprint_requirements
@@ -23,7 +23,14 @@ class RequirementsController < ApplicationController
     end
   end
 
+  def update
+    requirement = Requirement.find(params[:r_id])
+    requirement.update(status: params[:status])
+    redirect_to 'sprint_requirements'
+  end
+
   def destroy
   end
+
 
 end

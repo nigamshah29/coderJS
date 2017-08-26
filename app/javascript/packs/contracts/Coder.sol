@@ -17,6 +17,7 @@ contract Coder {
     currentState = GameState.notStarted;
   }
 
+
   function startRequirement(uint256 _contract_amount) onlyState(GameState.notStarted) payable returns (bool) {
       // client = _client;
       client = msg.sender;
@@ -32,22 +33,20 @@ contract Coder {
       return true;
   }
 
+
   function approvalRequest(address _coderAdmin) onlyState(GameState.inProgress) returns (bool) {
       coderAdmin = _coderAdmin;
       currentState = GameState.pendingApproval;
       return true;
   }
 
-  function closeRequirement() onlyState(GameState.pendingApproval) returns (bool){
-      currentState = GameState.requirementApproved;
-      return true;    
-  }
 
-  function payCoder() onlyState(GameState.requirementApproved) payable returns (bool) {
-    coderAdmin.transfer(this.balance);
-    currentState = GameState.notStarted;
-    return true;
-    selfdestruct(client);
+  function closeRequirement(address _coderAdmin) onlyState(GameState.pendingApproval) payable returns (bool) {
+      coderAdmin = _coderAdmin;
+      coderAdmin.transfer(this.balance);
+      currentState = GameState.notStarted;
+      return true;
+      selfdestruct(client);
   }
 
   function getBalance() constant returns (uint256) {

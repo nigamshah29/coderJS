@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'requirements/create'
-
-  get 'requirements/sprint_requirements'
-
   root 'projects#dashboard'
 
   # Login/Registration Routes
@@ -49,6 +45,13 @@ Rails.application.routes.draw do
 
   get '/projects/dashboard' => 'projects#dashboard'
 
+  post 'requirements/create' => 'requirements#create'
+
+  get 'requirements/sprint_requirements' => 'requirements#sprint_requirements'
+
+  put 'requirements/:r_id' => 'requirements#update'
+
+  resources :requirements
   # Payment Routes
 
   get '/payments/:reqID/request_payment/:payment_amount' => 'payments#request_payment'
