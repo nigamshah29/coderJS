@@ -66,7 +66,6 @@ App = {
   },
 
   markReadytoStart: function(reqId) { 
-  debugger;     
     $('#start_requirement_reqId').find('button').text('Requirement Started').attr('disabled', true);
   }
 
