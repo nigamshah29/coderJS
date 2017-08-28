@@ -3,26 +3,6 @@
 		const requirements = <%=raw @requirements.to_json %>;
 		const project_rate = <%= @project_rate %>;
 
-		requirements.map(r => {
-			$(`#mark_ready_${r.id}`).click((event) => {
-				event.preventDefault();
-				console.log("Mark Requirement " + r.id + " ready for $", r.expected_time * project_rate);
-			    function markReady(reqId){ 
-			     $(`#mark_ready_${reqId}`).text('Ready to Start...').attr('disabled', true);
-			    }
-				$.ajax({
-					type: 'PUT',
-					beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-					url: `/requirements/${r.id}`,
-					data: {
-						status: "Pending Client Payment",
-					},
-					success: (response) => {
-						console.log(response);
-					}
-				});
-			});
-		});
 
 		requirements.map(r => {
 			$(`#start_requirement_${r.id}`).click((event) => {
@@ -30,62 +10,46 @@
 				console.log("Start Requirement",r.id, r.expected_time * project_rate);
 				const reqId = r.id;
 				const payment_amount = r.expected_time * project_rate;
-				window.App.handleStartRequirement(reqId, payment_amount).then(function(success){
+				window.App.handleStartRequirement(reqId, payment_amount).then((success) => {
 					$.ajax({
 						type: 'PUT',
-						beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+						beforeSend: xhr => {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
 						url: `/requirements/${r.id}`,
 						data: {
 							status: "Development In Progress"
 						},
 						success: (response) => {
-							console.log(response);
+							//debugger;
+							window.location.reload();
+							//console.log(response);
 						}
 					});
 				});
 			});
 		});
 		
-
-		requirements.map(r => {
-			$(`#requirement_complete_${r.id}`).click((event) => {
-				event.preventDefault();
-				console.log("Requirement " + r.id + " Complete");
-				$.ajax({
-					type: 'PUT',
-					beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-					url: `/requirements/${r.id}`,
-					data: {
-						r_id: r.id,
-						status: "Requirement Complete"
-					},
-					success: function(response){
-						console.log(response);
-					}
-				});
-			});
-		});
 		
 
 		requirements.map(r => {
 			$(`#approve_requirement_${r.id}`).click((event) => {
 				event.preventDefault();
-				console.log("Approve Requirement " + r.id + "Pay Out: $", r.expected_time * project_rate);
+				console.log("Approve Requirement " + r.id + ", Pay Out: $", r.expected_time * project_rate);
 				const reqId = r.id;
 				const payment_amount = r.expected_time * project_rate;
 				window.App.approveRequirement(reqId, payment_amount).then(function(success){
-						$.ajax({
-							type: 'PUT',
-							beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-							url: `/requirements/${r.id}`,
-							data: {
-								r_id: r.id,
-								status: "Requirement Approved - Coder Payment Received"
-							},
-							success: function(response){
-								console.log(response);
-							}
-						});
+					$.ajax({
+						type: 'PUT',
+						beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+						url: `/requirements/${r.id}`,
+						data: {
+							r_id: r.id,
+							status: "Requirement Approved - Coder Payment Received"
+						},
+						success: function(response){
+							window.location.reload();
+							console.log(response);
+						}
+					});
 				});
 			});
 		});

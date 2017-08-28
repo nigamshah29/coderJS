@@ -26,7 +26,17 @@ class RequirementsController < ApplicationController
   def update
     requirement = Requirement.find(params[:r_id])
     requirement.update(status: params[:status])
-    redirect_to 'sprint_requirements'
+    p_id = requirement.sprint.project.id
+    s_id = requirement.sprint.id
+    render json: requirement
+  end
+
+  def update_status
+    requirement = Requirement.find(params[:r_id])
+    requirement.update(status: params[:status])
+    p_id = requirement.sprint.project.id
+    s_id = requirement.sprint.id
+    redirect_to "/projects/#{p_id}/sprints/#{s_id}"
   end
 
   def destroy

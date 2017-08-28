@@ -41,27 +41,35 @@ App = {
 
   handleStartRequirement: function(reqId, payment_amount) {
     var coderInstance;
-    App.web3.eth.getAccounts(function(error, accounts){
-      if (error) {
-        console.log(error);
-      } 
-      // Set client equal to a testrpc account, change to MetaMask address
-      let client = accounts[2];
+    return new Promise((resolve, reject) => {
+      const self = this;
+      self.resolve = resolve;
+      self.reject = reject;
+      App.web3.eth.getAccounts(function(error, accounts){
+        if (error) {
+          console.log(error);
+        } 
+        // Set client equal to a testrpc account, change to MetaMask address
+        let client = accounts[2];
 
-      App.contracts.Coder.deployed().then(function(instance) {
-        coderInstance = instance;
-          return coderInstance.startRequirement({
-            contract_amount: payment_amount,
-            from: client, 
-            value: web3.toWei(payment_amount/100, "ether")
-          });
-      }).then(function(success) {
-        alert("Payment Received");
-        App.markInProgress(reqId);
-      }).catch(function(err) {
-        console.error(err.message);
-      });
-    })
+        return App.contracts.Coder.deployed().then(function(instance) {
+          coderInstance = instance;
+            return coderInstance.startRequirement({
+              contract_amount: payment_amount,
+              from: client, 
+              value: web3.toWei(payment_amount/100, "ether")
+            });
+        }).then(function(success) {
+          alert("Payment Received");
+          App.markInProgress(reqId);
+          self.resolve(true);
+        }).catch(function(err) {
+          self.reject(false)
+          console.error(err.message);
+        });
+      })
+
+    }) //new promise
   },
 
 
@@ -72,28 +80,38 @@ App = {
 
   approveRequirement: function(reqId, payment_amount) {
     var coderInstance;
-    App.web3.eth.getAccounts(function(error, accounts){
-      if (error) {
-        console.log(error);
-      } 
-      // Set coderAdmin equal to a testrpc account, change to MetaMask address
-      let coderAdmin = accounts[4];
-
-      App.contracts.Coder.deployed().then(function(instance) {
-        coderInstance = instance;
-          return coderInstance.closeRequirement({
-            contract_amount: payment_amount,
-            from: client, 
-            value: web3.toWei(payment_amount/100, "ether")
-          });
-      }).then(function(success) {
-        return App.markInProgress(reqId);
-      }).catch(function(err) {
-        console.error(err.message);
+    return new Promise((resolve, reject) => {
+      const self = this;
+      self.resolve = resolve;
+      self.reject = reject;
+      App.web3.eth.getAccounts(function(error, accounts){
+        if (error) {
+          console.log(error);
+        } 
+        // Set coderAdmin equal to a testrpc account, change to MetaMask address
+        let coderAdmin = accounts[4];
+        App.contracts.Coder.deployed().then(function(instance) {
+          coderInstance = instance;
+            return coderInstance.closeRequirement({
+              contract_amount: payment_amount,
+              from: coderInstance, 
+              value: web3.toWei(payment_amount/100, "ether")
+            });
+        }).then(function(success) {
+          alert("Payment Sent to Coder");
+          return App.markApproved(reqId);
+          self.resolve(true);
+        }).catch(function(err) {
+          self.reject(false);
+          console.error(err.message);
+        });
       });
-    })
+    }) //new promise
   },
 
+  markApproved: function(reqId) { 
+    $(`#approve_requirement_${reqId}`).text('Approved...').attr('disabled', true);
+  }
 
 };
 

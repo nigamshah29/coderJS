@@ -45,13 +45,13 @@ Rails.application.routes.draw do
 
   get '/projects/dashboard' => 'projects#dashboard'
 
-  post 'requirements/create' => 'requirements#create'
+  post '/requirements/create' => 'requirements#create'
 
-  get 'requirements/sprint_requirements' => 'requirements#sprint_requirements'
+  put '/requirements/:r_id' => 'requirements#update'
 
-  put 'requirements/:r_id' => 'requirements#update'
+  put '/requirements/:r_id/update_status' => 'requirements#update_status'
 
-  resources :requirements
+  # resources :requirements
   # Payment Routes
 
   get '/payments/:reqID/request_payment/:payment_amount' => 'payments#request_payment'

@@ -41,16 +41,26 @@
         <td><%=r.status%></td>
         <td>
           <% if r.status == "Not Started" %>
-            <a class="btn btn-default btn-ready" id="mark_ready_<%=r.id%>">Mark Ready to Start</a>
-          <% else r.status == "Development In Progress" %>
-            <a class="btn btn-default btn-complete" id="requirement_complete_<%=r.id%>"> Mark as Complete</a>
+            <%= button_to "Mark Ready to Start", "/requirements/#{r.id}/update_status", method: :put, class: "btn btn-default btn-ready", params: {status: "Ready to Start"}, data: {disable_with: "Ready to Start..."} %>
+          <% elsif r.status == "Ready to Start" %>
+            <%= button_tag "Pending Client Payment...", disabled:true, class: "btn btn-default" %>
+          <% elsif r.status == "Development In Progress" %>
+            <%= button_to "Mark as Complete", "/requirements/#{r.id}/update_status", method: :put, class: "btn btn-default btn-complete", params: {status: "Requirement Complete"}, data: {disable_with: "Awaiting Approval..."} %>
+          <% elsif r.status == "Requirement Complete" %>
+            <%= button_tag "Awaiting Approval...", disabled:true, class: "btn btn-default" %>
           <% end %>
         </td>
         <td>
-          <% if r.status == "Pending Client Payment" %>
+          <% if r.status == "Not Started" %>
+            <%= button_tag "Not Ready to Start", disabled:true, class: "btn btn-default" %>
+          <% elsif r.status == "Ready to Start" %>
             <a class="btn btn-success btn-start" id="start_requirement_<%=r.id%>">Start Requirement</a>
-          <% else r.status == "Requirement Complete" %>
+          <% elsif r.status == "Development In Progress" %>
+            <%= button_tag "In Progress...", disabled:true, class: "btn btn-success" %>
+          <% elsif r.status == "Requirement Complete" %>
             <a class="btn btn-success btn-approve" id="approve_requirement_<%=r.id%>">Approve Requirement</a>
+          <% elsif r.status == "Approved" %>
+            <%= button_tag "Approved", disabled:true, class: "btn btn-success" %>
           <% end %>
         </td>
     </tr>
