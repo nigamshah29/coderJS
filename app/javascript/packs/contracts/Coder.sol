@@ -2,7 +2,7 @@ pragma solidity ^0.4.4;
 
 contract Coder {
 
-  enum GameState {notStarted, inProgress, pendingApproval, requirementApproved}  //4 states that a "Requirement" object will go through
+  enum GameState {notStarted, inProgress, requirementApproved}  //states that a "Requirement" object will go through
   GameState public currentState;  //currentState variable that is set to the state the Requirement is in
   address public coderAdmin;  //ETH wallet address for the Coder project admin or PM
   address public client;  //ETH wallet address for the client
@@ -34,17 +34,17 @@ contract Coder {
   }
 
 
-  function approvalRequest(address _coderAdmin) onlyState(GameState.inProgress) returns (bool) {
-      coderAdmin = _coderAdmin;
-      currentState = GameState.pendingApproval;
-      return true;
-  }
+  // function approvalRequest(address _coderAdmin) onlyState(GameState.inProgress) returns (bool) {
+  //     coderAdmin = _coderAdmin;
+  //     currentState = GameState.pendingApproval;
+  //     return true;
+  // }
 
 
-  function closeRequirement(address _coderAdmin) onlyState(GameState.pendingApproval) payable returns (bool) {
+  function closeRequirement(address _coderAdmin) onlyState(GameState.inProgress) payable returns (bool) {
       coderAdmin = _coderAdmin;
       coderAdmin.transfer(this.balance);
-      currentState = GameState.notStarted;
+      currentState = GameState.requirementApproved;
       return true;
       selfdestruct(client);
   }

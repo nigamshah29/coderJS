@@ -50,7 +50,7 @@ App = {
           console.log(error);
         } 
         // Set client equal to a testrpc account, change to MetaMask address
-        let client = accounts[2];
+        let client = accounts[1];
 
         return App.contracts.Coder.deployed().then(function(instance) {
           coderInstance = instance;
@@ -89,13 +89,12 @@ App = {
           console.log(error);
         } 
         // Set coderAdmin equal to a testrpc account, change to MetaMask address
-        let coderAdmin = accounts[4];
+        // let coderAdmin = accounts[4];
         App.contracts.Coder.deployed().then(function(instance) {
           coderInstance = instance;
+          debugger;
             return coderInstance.closeRequirement({
-              contract_amount: payment_amount,
-              from: coderInstance, 
-              value: web3.toWei(payment_amount/100, "ether")
+              coderAdmin: accounts[0]
             });
         }).then(function(success) {
           alert("Payment Sent to Coder");
