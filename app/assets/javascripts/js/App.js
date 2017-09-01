@@ -1,4 +1,10 @@
+//= require Coder
 console.log('HI');
+
+// After migrate and moving to public folder:
+// rename Coder.json to Coder.js
+// set the contract equal to window.CoderContract. i.e:
+// window.CoderContract = {...contract stuff}
 
 App = {
   web3Provider: null,
@@ -21,9 +27,8 @@ App = {
 
 
   initContract: function() {
-    $.getJSON('/Coder.json', function(data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract.
-      var CoderArtifact = data;
+      var CoderArtifact = CoderContract;
       App.contracts.Coder = TruffleContract(CoderArtifact);
 
       // Set the provider for our contract.
@@ -35,7 +40,6 @@ App = {
           console.log(error);
         }
        });
-     })
     },
 
 
@@ -54,8 +58,7 @@ App = {
 
         return App.contracts.Coder.deployed().then(function(instance) {
           coderInstance = instance;
-            return coderInstance.startRequirement({
-              contract_amount: payment_amount,
+            return coderInstance.startRequirement(payment_amount, {
               from: client, 
               value: web3.toWei(payment_amount/100, "ether")
             });
