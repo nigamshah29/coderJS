@@ -45,6 +45,7 @@ App = {
 
   handleStartRequirement: function(reqId, payment_amount) {
     var coderInstance;
+    // var win = window;
     return new Promise((resolve, reject) => {
       const self = this;
       self.resolve = resolve;
@@ -55,7 +56,7 @@ App = {
         } 
         // Set client equal to a testrpc account, change to MetaMask address
         let client = accounts[1];
-
+        self.ethaccounts = accounts;
         return App.contracts.Coder.deployed().then(function(instance) {
           coderInstance = instance;
             return coderInstance.startRequirement(payment_amount, {
@@ -81,8 +82,10 @@ App = {
   },
 
 
-  approveRequirement: function(reqId, payment_amount) {
+  approveRequirement: function() {
     var coderInstance;
+    // var win = window;
+    debugger;
     return new Promise((resolve, reject) => {
       const self = this;
       self.resolve = resolve;
@@ -92,12 +95,19 @@ App = {
           console.log(error);
         } 
         // Set coderAdmin equal to a testrpc account, change to MetaMask address
-        // let coderAdmin = accounts[4];
+        debugger;
+        let coderAdmin = accounts[0];
+        // App.contracts.Coder.deployed().
+        //   then(function(instance) {
+        //     coderInstance = instance;
+        //     return coderInstance.getBalance().then(function(balance){
+        //         console.log("Balance: ", balance);
+        //       });
+        //   });
         App.contracts.Coder.deployed().then(function(instance) {
           coderInstance = instance;
-          debugger;
-            return coderInstance.closeRequirement({
-              coderAdmin: accounts[0]
+            return coderInstance.closeRequirement(coderAdmin, {
+                to: coderAdmin
             });
         }).then(function(success) {
           alert("Payment Sent to Coder");
@@ -111,6 +121,7 @@ App = {
     }) //new promise
   },
 
+
   markApproved: function(reqId) { 
     $(`#approve_requirement_${reqId}`).text('Approved...').attr('disabled', true);
   }
@@ -122,4 +133,5 @@ App = {
 $(document).ready(() => {
   window.App = App; 
   App.initWeb3()
+
 });
